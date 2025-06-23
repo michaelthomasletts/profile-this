@@ -34,4 +34,4 @@ profiler.plot(
 
 To get this:
 
-![func image](docs/func.png)
+![func image](https://raw.githubusercontent.com/michaelthomasletts/profile-this/refs/heads/main/docs/func.png)
