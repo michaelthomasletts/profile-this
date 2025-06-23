@@ -1,6 +1,6 @@
 [project]
 name = "profile-this"
-version = "0.1.4"
+version = "0.1.5"
 description = "A stupid simple memory profiler."
 authors = [
     {name = "Mike Letts",email = "lettsmt@gmail.com"}

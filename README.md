@@ -1,5 +1,8 @@
 # profile-this
 
+![PyPI - Version](https://img.shields.io/pypi/v/profile-this?logo=pypi)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/profile-this?logo=python)
+
 Sometimes you need sophisticated line-by-line profiling for optimizing your Python code. Other times, you just want a quick and basic memory profile chart.
 
 There are plenty of tools for the former use-case, e.g. `py-spy` or `vprof`. But not many (or any) tools for the latter use-case.
