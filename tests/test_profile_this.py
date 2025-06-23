@@ -12,11 +12,9 @@ def test_profile_this():
     docs = os.path.abspath(
         os.path.join(os.path.dirname(__file__), "..", "docs")
     )
-    profiler = ProfileThis()
-    profiler.start()
-    func()
-    profiler.stop()
-    profiler.plot(
-        title="Profile for func",
-        path=os.path.join(docs, "func.png"),
-    )
+    with ProfileThis() as profiler:
+        func()
+        profiler.plot(
+            title="Profile for func",
+            path=os.path.join(docs, "func.png"),
+        )

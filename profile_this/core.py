@@ -26,6 +26,14 @@ class ProfileThis:
         self.timestamps = []
         self.memory_mb = []
 
+    def __enter__(self) -> "ProfileThis":
+        self.start()
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.stop()
+        self.clear()
+
     def _log(self):
         """Snapshots memory allocation and runtime according to some time interval."""
 
@@ -51,6 +59,13 @@ class ProfileThis:
 
         self.running = False
         self.thread.join()
+
+    def clear(self):
+        """Clears the timestamps and memory_mb attributes."""
+
+        self.timestamps = []
+        self.memory_mb = []
+        self.running = False
 
     def plot(
         self,

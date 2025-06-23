@@ -38,6 +38,17 @@ profiler.plot(
 )
 ```
 
+Or, equivalently, do this instead:
+
+```python
+with ProfileThis() as profiler:
+    func()
+    profiler.plot(
+        title="Profile for func",
+        path="docs/func.png",
+    )
+```
+
 To get this:
 
 ![func image](https://raw.githubusercontent.com/michaelthomasletts/profile-this/refs/heads/main/docs/func.png)
