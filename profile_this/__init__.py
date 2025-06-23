@@ -1,5 +1,5 @@
-from .core import ProfileThis
+from .core import ProfileThis, profilethis
 
-__all__ = ["ProfileThis"]
+__all__ = ["ProfileThis", "profilethis"]
 __author__ = "Mike Letts"
-__version__ = "0.1.5"
+__version__ = "0.1.6"

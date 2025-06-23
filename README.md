@@ -41,7 +41,7 @@ profiler.plot(
 )
 ```
 
-Or, equivalently, do this instead:
+Or this:
 
 ```python
 with ProfileThis() as profiler:
@@ -50,6 +50,18 @@ with ProfileThis() as profiler:
         title="Profile for func",
         path="docs/func.png",
     )
+```
+
+Or this:
+
+```python
+from profile_this import profilethis
+
+@profilethis(title="Profile for func", path="docs/func.png")
+def func(n=10_000_000):
+    return sum([randint(0, i + 1) for i in range(n)])
+
+func()
 ```
 
 To get this:

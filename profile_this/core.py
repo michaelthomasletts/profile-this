@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
-__all__ = ["ProfileThis"]
+__all__ = ["ProfileThis", "profilethis"]
 
+from functools import wraps
 from os import getpid
 from threading import Thread
 from time import sleep, time
@@ -98,3 +99,44 @@ class ProfileThis:
         plt.grid(True)
         plt.tight_layout()
         plt.savefig(path)
+
+
+def profilethis(
+    title: str,
+    path: str,
+    color: str | None = None,
+    figsize: Tuple[int, int] | None = None,
+    interval: float | None = None,
+):
+    """Decorator that plots runtime and memory allocation.
+
+    Parameters
+    ----------
+    interval : float, optional
+        How often to snapshot memory. Default is 0.1.    
+    title : str
+        The title of the plot.
+    path : str
+        Where to save the plot.
+    color : str | None, optional
+        The color of the line on the plot. Default is blue.
+    figsize : Tuple[int, int] | None, optional
+        The size of the ploat. Default is (10, 5).
+    """
+
+    def decorator(func):
+        @wraps(func)
+        def wrapper(
+            *args,
+            **kwargs,
+        ):
+            with ProfileThis(interval=interval) as profiler:
+                result = func(*args, **kwargs)
+                profiler.plot(
+                    title=title, path=path, color=color, figsize=figsize
+                )
+                return result
+
+        return wrapper
+
+    return decorator
