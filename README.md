@@ -8,7 +8,13 @@ There are plenty of tools for the former use-case, e.g. `py-spy` or `vprof`. But
 
 ### Example
 
-Doing this:
+Install it like this:
+
+```bash
+pip install profile-this
+```
+
+Do this:
 
 ```python
 from random import randint
@@ -26,6 +32,6 @@ profiler.plot(
 )
 ```
 
-Results in this:
+To get this:
 
 ![func image](docs/func.png)
