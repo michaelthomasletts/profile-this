@@ -6,6 +6,12 @@ There are plenty of tools for the former use-case, e.g. `py-spy` or `vprof`. But
 
 `profile-this` is a stupid simple memory profiler for people who just want a basic memory profiling plot without writing one from scratch.
 
+### Links
+
+[Source Code](https://github.com/michaelthomasletts/profile-this)
+
+[PyPI](https://pypi.org/project/profile-this/)
+
 ### Example
 
 Install it like this:
