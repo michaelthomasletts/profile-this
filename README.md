@@ -1,4 +1,8 @@
-# profile-this
+<div align="center">
+  <img src="https://raw.githubusercontent.com/michaelthomasletts/profile-this/refs/heads/main/docs/profile-this.png" />
+</div>
+
+</br>
 
 ![PyPI - Version](https://img.shields.io/pypi/v/profile-this?logo=pypi)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/profile-this?logo=python)
