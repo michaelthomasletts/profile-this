@@ -100,28 +100,28 @@ class ProfileThis:
         )
         plt.figure(figsize=(10, 5), dpi=100)
         lineplot(x=self.timestamps, y=self.memory_mb, color=color)
-        plt.title(title, weight="bold", fontsize=14).set_path_effects(
+        plt.title(title, weight="bold", fontsize=16).set_path_effects(
             [
                 path_effects.Stroke(linewidth=1, foreground="red"),
                 path_effects.Normal(),
             ]
         )
         plt.xlabel(
-            "Time (seconds)", weight="bold", fontsize=10
+            "Time (seconds)", weight="bold", fontsize=14
         ).set_path_effects(
             [
                 path_effects.Stroke(linewidth=1, foreground="red"),
                 path_effects.Normal(),
             ]
         )
-        plt.ylabel("Memory (MB)", weight="bold", fontsize=10).set_path_effects(
+        plt.ylabel("Memory (MB)", weight="bold", fontsize=14).set_path_effects(
             [
                 path_effects.Stroke(linewidth=1, foreground="red"),
                 path_effects.Normal(),
             ]
         )
-        plt.xticks(fontsize=10)
-        plt.yticks(fontsize=10)
+        plt.xticks(fontsize=14)
+        plt.yticks(fontsize=14)
         plt.tight_layout()
         mplcyberpunk.add_glow_effects()
         plt.savefig(path)
