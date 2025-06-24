@@ -6,10 +6,12 @@ from functools import wraps
 from os import getpid
 from threading import Thread
 from time import sleep, time
-from typing import Tuple
 
+import matplotlib.patheffects as path_effects
 import matplotlib.pyplot as plt
+import mplcyberpunk
 from psutil import Process
+from seaborn import lineplot
 
 
 class ProfileThis:
@@ -36,7 +38,9 @@ class ProfileThis:
         self.clear()
 
     def _log(self):
-        """Snapshots memory allocation and runtime according to some time interval."""
+        """Snapshots memory allocation and runtime according to some
+        time interval.
+        """
 
         process = Process(getpid())
         start_time = time()
@@ -68,13 +72,7 @@ class ProfileThis:
         self.memory_mb = []
         self.running = False
 
-    def plot(
-        self,
-        title: str,
-        path: str,
-        color: str | None = None,
-        figsize: Tuple[int, int] | None = None,
-    ):
+    def plot(self, title: str, path: str):
         """Plots runtime and memory allocation.
 
         Parameters
@@ -83,45 +81,63 @@ class ProfileThis:
             The title of the plot.
         path : str
             Where to save the plot.
-        color : str | None, optional
-            The color of the line on the plot. Default is blue.
-        figsize : Tuple[int, int] | None, optional
-            The size of the ploat. Default is (10, 5).
         """
 
-        color = "blue" if color is None else color
-        figsize = (10, 5) if figsize is None else figsize
-        plt.figure(figsize=figsize)
-        plt.plot(self.timestamps, self.memory_mb, linewidth=2, color=color)
-        plt.xlabel("Time (seconds)")
-        plt.ylabel("Memory (MB)")
-        plt.title(title)
-        plt.grid(True)
+        color = "#FF0000FF"
+        plt.style.use("cyberpunk")
+        plt.rcParams.update(
+            {
+                "figure.facecolor": "none",
+                "axes.facecolor": "none",
+                "savefig.transparent": True,
+                "text.color": color,
+                "axes.labelcolor": color,
+                "xtick.color": color,
+                "ytick.color": color,
+                "axes.edgecolor": color,
+                "grid.color": "none",
+            }
+        )
+        plt.figure(figsize=(10, 5), dpi=100)
+        lineplot(x=self.timestamps, y=self.memory_mb, color=color)
+        plt.title(title, weight="bold", fontsize=14).set_path_effects(
+            [
+                path_effects.Stroke(linewidth=1, foreground="red"),
+                path_effects.Normal(),
+            ]
+        )
+        plt.xlabel(
+            "Time (seconds)", weight="bold", fontsize=10
+        ).set_path_effects(
+            [
+                path_effects.Stroke(linewidth=1, foreground="red"),
+                path_effects.Normal(),
+            ]
+        )
+        plt.ylabel("Memory (MB)", weight="bold", fontsize=10).set_path_effects(
+            [
+                path_effects.Stroke(linewidth=1, foreground="red"),
+                path_effects.Normal(),
+            ]
+        )
+        plt.xticks(fontsize=10)
+        plt.yticks(fontsize=10)
         plt.tight_layout()
+        mplcyberpunk.add_glow_effects()
         plt.savefig(path)
 
 
-def profilethis(
-    title: str,
-    path: str,
-    color: str | None = None,
-    figsize: Tuple[int, int] | None = None,
-    interval: float | None = None,
-):
+def profilethis(title: str, path: str, interval: float | None = None):
     """Decorator that plots runtime and memory allocation.
 
     Parameters
     ----------
-    interval : float, optional
-        How often to snapshot memory. Default is 0.1.    
     title : str
         The title of the plot.
     path : str
         Where to save the plot.
-    color : str | None, optional
-        The color of the line on the plot. Default is blue.
-    figsize : Tuple[int, int] | None, optional
-        The size of the ploat. Default is (10, 5).
+    interval : float, optional
+        How often to snapshot memory. Default is 0.1.
     """
 
     def decorator(func):
@@ -132,9 +148,7 @@ def profilethis(
         ):
             with ProfileThis(interval=interval) as profiler:
                 result = func(*args, **kwargs)
-                profiler.plot(
-                    title=title, path=path, color=color, figsize=figsize
-                )
+                profiler.plot(title=title, path=path)
                 return result
 
         return wrapper
