@@ -50,10 +50,11 @@ Or this:
 ```python
 with ProfileThis() as profiler:
     func()
-    profiler.plot(
-        title="Profile for func",
-        path="docs/func.png",
-    )
+
+profiler.plot(
+    title="Profile for func",
+    path="docs/func.png",
+)
 ```
 
 Or this:

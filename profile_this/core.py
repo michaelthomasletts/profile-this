@@ -2,6 +2,7 @@
 
 __all__ = ["ProfileThis", "profilethis"]
 
+from atexit import register
 from functools import wraps
 from os import getpid
 from threading import Thread
@@ -35,7 +36,6 @@ class ProfileThis:
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.stop()
-        self.clear()
 
     def _log(self):
         """Snapshots memory allocation and runtime according to some
@@ -59,6 +59,7 @@ class ProfileThis:
         self.thread = Thread(target=self._log, daemon=True)
         self.thread.start()
 
+    @register
     def stop(self):
         """Stops memory profiling."""
 
@@ -148,8 +149,10 @@ def profilethis(title: str, path: str, interval: float | None = None):
         ):
             with ProfileThis(interval=interval) as profiler:
                 result = func(*args, **kwargs)
-                profiler.plot(title=title, path=path)
-                return result
+
+            profiler.plot(title=title, path=path)
+            profiler.clear()
+            return result
 
         return wrapper
 
